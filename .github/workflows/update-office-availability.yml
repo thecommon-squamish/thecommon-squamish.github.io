@@ -1,0 +1,32 @@
+name: Update private office availability
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: office-availability
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - run: node scripts/update-office-availability.mjs
+        env:
+          OFFICERND_CLIENT_ID: ${{ secrets.OFFICERND_CLIENT_ID }}
+          OFFICERND_CLIENT_SECRET: ${{ secrets.OFFICERND_CLIENT_SECRET }}
+      - name: Publish checked inventory
+        run: |
+          git config user.name 'The Common availability bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add office-availability.json
+          git diff --cached --quiet || { git commit -m 'Refresh private office availability' && git push; }
