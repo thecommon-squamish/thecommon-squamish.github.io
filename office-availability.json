@@ -1,0 +1,15 @@
+{
+  "generatedAt": "2026-11-20T02:10:05.606Z",
+  "offices": [
+    {
+      "name": "Micro Office",
+      "planUrl": "https://e-commerce.officernd.com/thecommon/plans/685a4f6aeefbc2e8fa8b62c4",
+      "available": true
+    },
+    {
+      "name": "Small Office Container",
+      "planUrl": "https://e-commerce.officernd.com/thecommon/plans/685a4f6aeefbc2e8fa8b6294",
+      "available": true
+    }
+  ]
+}
