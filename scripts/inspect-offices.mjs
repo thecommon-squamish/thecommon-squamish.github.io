@@ -35,3 +35,12 @@ do {
   cursor = page.cursorNext || undefined;
 } while (cursor);
 console.log(`Matched ${count} office-related resources`);
+for (const id of ['62e95712d54a5a4fc9a5dcb2', '63d8492c3751e703d70c3aba', '63d84e349cf082ae33576eb9']) {
+  const url = new URL(`${root}/assignments`);
+  url.searchParams.set('resource', id);
+  url.searchParams.set('$limit', '50');
+  const response = await fetch(url, { headers: { authorization: `Bearer ${token}` } });
+  if (!response.ok) throw new Error(`OfficeRnD assignment lookup failed for ${id} (${response.status}): ${(await response.text()).slice(0, 500)}`);
+  const page = await response.json();
+  console.log(JSON.stringify({ resource: id, assignmentShape: Object.keys(page), assignments: page.results?.map(({ _id, startDate, endDate, start, end, status }) => ({ _id, startDate, endDate, start, end, status })) }));
+}
