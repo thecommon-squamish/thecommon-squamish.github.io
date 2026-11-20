@@ -1,0 +1,20 @@
+name: Inspect private office resources
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node scripts/inspect-offices.mjs
+        env:
+          OFFICERND_CLIENT_ID: ${{ secrets.OFFICERND_CLIENT_ID }}
+          OFFICERND_CLIENT_SECRET: ${{ secrets.OFFICERND_CLIENT_SECRET }}
