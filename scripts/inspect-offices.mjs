@@ -17,7 +17,7 @@ let cursor;
 let count = 0;
 do {
   const url = new URL(`${root}/resources`);
-  url.searchParams.set('$limit', '100');
+  url.searchParams.set('$limit', '50');
   if (cursor) url.searchParams.set('$cursorNext', cursor);
   const response = await fetch(url, { headers: { authorization: `Bearer ${token}` } });
   if (!response.ok) throw new Error(`OfficeRnD resource lookup failed (${response.status}): ${(await response.text()).slice(0, 500)}`);
