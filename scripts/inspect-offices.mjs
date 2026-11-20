@@ -20,7 +20,7 @@ do {
   url.searchParams.set('$limit', '100');
   if (cursor) url.searchParams.set('$cursorNext', cursor);
   const response = await fetch(url, { headers: { authorization: `Bearer ${token}` } });
-  if (!response.ok) throw new Error(`OfficeRnD resource lookup failed (${response.status})`);
+  if (!response.ok) throw new Error(`OfficeRnD resource lookup failed (${response.status}): ${(await response.text()).slice(0, 500)}`);
   const page = await response.json();
   if (!Array.isArray(page.results)) throw new Error('Invalid OfficeRnD resource response');
   for (const resource of page.results) {
